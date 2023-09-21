@@ -23,11 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <div className='fixed-top'>
         <SocialMediaLoginBar/>
         <AppHeader/>
+        </div>
+        <div className="mt-5 pt-5">
         <Container style={{minHeight:' calc(100vh - 60px)' }}>
         {children}
         </Container>
+        </div>
+        
         <AppFooter/>
         </body>
     </html>
