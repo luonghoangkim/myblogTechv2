@@ -1,6 +1,8 @@
+import NewsList from "@/components/app.listPost";
+
 const  FutureTech = () => {
     return <div>
-        Công nghệ tương lai
+      <NewsList/>
     </div>
 }
 

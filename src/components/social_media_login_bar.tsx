@@ -25,13 +25,12 @@ const SocialMediaLoginBar = () => {
     return (
         <div className="flex items-center justify-end bg-black h-7 p-2 pr-10">
             <div className="ml-auto flex items-center space-x-2">
-                <button className="text-white no-underline pr-2" onClick={handleRegisterClick}>
-                    Đăng ký
-                </button>
-                <button className="text-white no-underline" onClick={handleLoginClick}>
+            <button className="text-white no-underline" onClick={handleLoginClick}>
                     Đăng nhập
                 </button>
-
+                <button className="text-white no-underline pr-2" onClick={handleRegisterClick}>
+                    Đăng ký
+                </button> 
                 <Link href="#">
                     <span className="text-white no-underline">Contact Us</span>
                 </Link>

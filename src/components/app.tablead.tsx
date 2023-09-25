@@ -38,8 +38,7 @@ function TechNewsView() {
       <tr>
         <th>ID</th>
         <th>Title</th>
-        <th>Date</th>
-        <th>Content</th>
+        <th>Date</th> 
         <th></th>
       </tr>
     </thead>
@@ -47,8 +46,7 @@ function TechNewsView() {
       <tr>
         <td>1</td>
         <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+        <td>Otto</td> 
         <td className=' m-3'>
           <Button variant="outline-info">View</Button>{' '}
           <Button variant="outline-success">Update</Button>{' '}
@@ -58,8 +56,7 @@ function TechNewsView() {
       <tr>
         <td>2</td>
         <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
+        <td>Thornton</td> 
         <td>
           <Button variant="outline-info">View</Button>{' '}
           <Button variant="outline-success">Update</Button>{' '}
@@ -76,56 +73,12 @@ function Future_technology_posts() {
     return (
       <div>
         <h4>Công nghệ tương lai</h4>  
-      <Table striped>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Date</th>
-          <th>Content</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td className=' m-3'>
-            <Button variant="outline-info">View</Button>{' '}
-            <Button variant="outline-success">Update</Button>{' '}
-            <Button variant="outline-danger">Delete</Button>{' '}
-            </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>
-            <Button variant="outline-info">View</Button>{' '}
-            <Button variant="outline-success">Update</Button>{' '}
-            <Button variant="outline-danger">Delete</Button>{' '}
-            </td>
-        </tr> 
-      </tbody>
-    </Table> 
-    </div> 
-    );
-}
-
-function Tutorials_and_tips_posts() {  
-  return (
-    <div>
-      <h4>Hướng dẫn và thủ thuật</h4>
-    <Table striped>
+        <Table striped>
     <thead>
       <tr>
         <th>ID</th>
         <th>Title</th>
-        <th>Date</th>
-        <th>Content</th>
+        <th>Date</th> 
         <th></th>
       </tr>
     </thead>
@@ -133,8 +86,7 @@ function Tutorials_and_tips_posts() {
       <tr>
         <td>1</td>
         <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+        <td>Otto</td> 
         <td className=' m-3'>
           <Button variant="outline-info">View</Button>{' '}
           <Button variant="outline-success">Update</Button>{' '}
@@ -144,8 +96,7 @@ function Tutorials_and_tips_posts() {
       <tr>
         <td>2</td>
         <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
+        <td>Thornton</td> 
         <td>
           <Button variant="outline-info">View</Button>{' '}
           <Button variant="outline-success">Update</Button>{' '}
@@ -153,7 +104,47 @@ function Tutorials_and_tips_posts() {
           </td>
       </tr> 
     </tbody>
-  </Table> 
+  </Table>
+    </div> 
+    );
+}
+
+function Tutorials_and_tips_posts() {  
+  return (
+    <div>
+      <h4>Hướng dẫn và thủ thuật</h4>
+      <Table striped>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Date</th> 
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Mark</td>
+        <td>Otto</td> 
+        <td className=' m-3'>
+          <Button variant="outline-info">View</Button>{' '}
+          <Button variant="outline-success">Update</Button>{' '}
+          <Button variant="outline-danger">Delete</Button>{' '}
+          </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Jacob</td>
+        <td>Thornton</td> 
+        <td>
+          <Button variant="outline-info">View</Button>{' '}
+          <Button variant="outline-success">Update</Button>{' '}
+          <Button variant="outline-danger">Delete</Button>{' '}
+          </td>
+      </tr> 
+    </tbody>
+  </Table>
   </div>
   
   );

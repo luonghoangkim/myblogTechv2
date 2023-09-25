@@ -1,8 +1,9 @@
+import NewsList from "@/components/app.listPost";
 
 
 const Guides_Tips = () => {
     return <div>
-        Hướng dẫn và Thủ thuật
+        <NewsList/>
     </div>
 }
 
