@@ -13,7 +13,8 @@ const submitRegistration = async (userData: any) => {
 
     if (response.ok) {
       const data = await response.json();
-      return data.message;
+      localStorage.setItem('token', data.token);
+      return data;
     } else {
       throw new Error('Đăng ký thất bại');
     }

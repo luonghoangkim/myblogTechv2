@@ -3,15 +3,17 @@ import React, { useState } from 'react';
 import { Form, Button, Offcanvas } from 'react-bootstrap';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import API_BASE_URL from '@/api/apiConfig';
+import submitRegistration from '@/api/register_api';
+
 
 interface FormRegisterProps {
   show: boolean;
   handleClose: () => void;
-  toggleForm: () => void;
+  toggleForm: () => void; 
+  onRegisterSuccess: (fullName : string) => void;
 }
 
-const FormRegister = ({ show, handleClose, toggleForm }: FormRegisterProps) => {
+const FormRegister = ({ show, handleClose, toggleForm, onRegisterSuccess}: FormRegisterProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({
     email: '',
@@ -23,23 +25,12 @@ const FormRegister = ({ show, handleClose, toggleForm }: FormRegisterProps) => {
     e.preventDefault();
     console.log(">>>>>>check data" ,userData)
     try {
-      const response = await fetch(`${API_BASE_URL}/user/sign-up`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data.message); 
-      } else {
-        throw new Error('Đăng ký thất bại');
-      }
+      const res = await submitRegistration(userData);
+      onRegisterSuccess(res.data.fullName)
+      console.log(res.message);
     } catch (error) {
       console.error(error);
-    } 
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

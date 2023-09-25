@@ -2,21 +2,38 @@ import React, { useState } from 'react';
 import { Form, Button, Offcanvas } from 'react-bootstrap';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import submitLogin from '@/api/login_api';
 
 interface FormLoginProps {
   show: boolean;
   handleClose: () => void;
   toggleForm: () => void;
+  onLoginSuccess: (fullName : string) => void;
 }
 
-const FormLogin = ({ show, handleClose, toggleForm }: FormLoginProps) => {
+const FormLogin = ({ show, handleClose, toggleForm, onLoginSuccess }: FormLoginProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [userData, setUserData] = useState({
+    email: '',
+    password: '',  
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Xử lý việc submit form tại đây
-  };
+    console.log(">>>>>>check data" ,userData)
+    try {
+      const res = await submitLogin(userData); 
+      console.log(res.message); 
+      console.log(res.data.fullName);      
+    } catch (error) {
+      console.error(error);
+    }
+};
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
   return (
     <>
       <Offcanvas show={show} onHide={handleClose} placement="end">
@@ -28,7 +45,12 @@ const FormLogin = ({ show, handleClose, toggleForm }: FormLoginProps) => {
             <Form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
               <Form.Group controlId="email">
                 <Form.Label>Email:</Form.Label>
-                <Form.Control type="email" placeholder="Nhập email" />
+                <Form.Control
+                 type="email" 
+                 placeholder="Nhập email"
+                 name="email"
+                 value={userData.email}
+                 onChange={handleInputChange} />
               </Form.Group>
               <Form.Group controlId="password" className="relative">
                 <Form.Label>Mật khẩu:</Form.Label>
@@ -36,6 +58,9 @@ const FormLogin = ({ show, handleClose, toggleForm }: FormLoginProps) => {
                   <Form.Control
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Nhập mật khẩu"
+                    name="password"
+                    value={userData.password}
+                    onChange={handleInputChange}
                   />
                   <Button
                     variant="link"
