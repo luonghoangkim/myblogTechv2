@@ -8,7 +8,7 @@ interface FormLoginProps {
   show: boolean;
   handleClose: () => void;
   toggleForm: () => void;
-  onLoginSuccess: (fullName : string) => void;
+  onLoginSuccess: (fullName : string ) => void;
 }
 
 const FormLogin = ({ show, handleClose, toggleForm, onLoginSuccess }: FormLoginProps) => {
@@ -17,14 +17,23 @@ const FormLogin = ({ show, handleClose, toggleForm, onLoginSuccess }: FormLoginP
     email: '',
     password: '',  
   });
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(">>>>>>check data" ,userData)
     try {
       const res = await submitLogin(userData); 
+      if (res.code === 200) { 
       console.log(res.message); 
-      console.log(res.data.fullName);      
+      const token = res.data.token;
+      const fullName = res.data.fullName;
+      localStorage.setItem('token', token); 
+      localStorage.setItem('fullName', fullName); 
+      onLoginSuccess(res.data.fullName)  
+    } else {   
+      console.error('Đăng nhập thất bại');
+    }
     } catch (error) {
       console.error(error);
     }
