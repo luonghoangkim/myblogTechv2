@@ -6,7 +6,7 @@ import AppHeader from '@/components/app.header';
 import AppFooter from '@/components/app.footer';
 import { Container } from 'react-bootstrap';
 import SocialMediaLoginBar from '@/components/social_media_login_bar';
-
+import { ToastContainer } from 'react-toastify';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,7 +32,18 @@ export default function RootLayout({
         {children}
         </Container>
         </div>
-        
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
         <AppFooter/>
         </body>
     </html>
