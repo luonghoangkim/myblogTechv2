@@ -6,11 +6,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import Loading from './app.loading';
 import jwt_decode from "jwt-decode"; 
+import { login } from '@/Service/userService';
 
 interface FormLoginProps {
   show: boolean;
   handleCloseForm: () => void;
-  toggleForm: () => void; 
+  toggleForm: () => void;  
 }
 
 interface DecodedToken {
@@ -28,28 +29,20 @@ const FormLogin = ({ show, handleCloseForm, toggleForm}: FormLoginProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true)
     e.preventDefault();
-    try { 
-      const res = await axios.post(`http://localhost:3001/api/user/sign-in`, { email: email, password: password });
-      if (res.data.newReponse.status === 'ERR') {
-        toast.error('Email hoặc mật khẩu sai')
-      } else {
-        toast.success('Đăng nhập thành công')
-        setEmail('');
-        setPassword('');
-        handleCloseForm()
-      }
-      localStorage.setItem('access_token', JSON.stringify(res.data.newReponse?.access_token))
-      const decoded : DecodedToken = jwt_decode(res.data.newReponse?.access_token); 
-      if (decoded?.id) {
-        const userId = decoded?.id;
-        localStorage.setItem('user_id', userId);
-      }
-      setIsLoading(false)
-    } catch (error) {
-      console.error('Error:', error);
-      setIsLoading(false)
-    }
+
+    const result = await login(email, password);
+
+    if (result.success) {
+      toast.success('Đăng nhập thành công');
+      setEmail('');
+      setPassword('');
+      handleCloseForm();
+    } else {
+      toast.error(result.error);
+    } 
+    setIsLoading(false);
   };
+  
 
   return (
     <>

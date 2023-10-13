@@ -7,6 +7,7 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import Loading from './app.loading';
+import { signUp } from '@/Service/userService';
 
 
 interface FormRegisterProps {
@@ -25,24 +26,19 @@ const FormRegister = ({ show, handleCloseForm, toggleForm }: FormRegisterProps) 
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true)
-    console.log(">>>>>>check data", email, password, confirmPassword)
-    try {
-      const response = await axios.post(`http://localhost:3001/api/user/sign-up`, { email: email, password: password, confirmPassword: confirmPassword });
-      console.log('Register in:', response.data);
-      if (response.data.status === 'ERR') {
-        toast.error('Email đã tồn tại')
-      } else if (response.data.status === 'ERR3') {
-        toast.error('Xác nhận mật khẩu không chính xác')
-      } else {
-        toast.success('Đăng ký thành công vui lòng đăng nhập để tiếp tục')
-        toggleForm();
-      }
-      setIsLoading(false)
-    } catch (error) {
-      console.error('Error:', error);
-      setIsLoading(false)
+    setIsLoading(true);
+    console.log(">>>>>>check data", email, password, confirmPassword);
+
+    const result = await signUp(email, password, confirmPassword);
+
+    if (result.success) {
+      toast.success('Đăng ký thành công vui lòng đăng nhập để tiếp tục');
+      toggleForm();
+    } else {
+      toast.error(result.error);
     }
+
+    setIsLoading(false);
   };
 
 

@@ -12,12 +12,15 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
  
   const getUserDetailsById = async (id:any, token:any) => {
+    console.log("id", id)
+    console.log("token", token)
     try {
-      const res = await axios.get(`http://localhost:3001/api/user/get-details/${id}`, {
+      const res = await axios.get(`http://localhost:3001/api/user/get-details/:${id}`, {
         headers: {
           token: `Bearer ${token}`,
         },
       }); 
+      console.log("resdata>>>>", res.data)
       return res.data;
     } catch (error) {
       console.error('Error fetching user details:', error);

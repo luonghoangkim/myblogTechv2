@@ -30,7 +30,8 @@ const SocialMediaLoginBar = () => {
                      {/* <>
                       <ButtonGroup>
                         <DropdownButton as={ButtonGroup} variant="dark" title={`Xin chào: ${userEmail}`} id="bg-nested-dropdown">
-                            <Dropdown.Item eventKey="1" >Đăng xuất</Dropdown.Item>
+                            <Dropdown.Item eventKey="1" >Profile</Dropdown.Item>
+                            <Dropdown.Item eventKey="2">Đăng xuất</Dropdown.Item>
                             <Dropdown.Item eventKey="2">Contact Us</Dropdown.Item>
                         </DropdownButton>
                     </ButtonGroup>
