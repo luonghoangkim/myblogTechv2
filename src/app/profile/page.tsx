@@ -5,49 +5,16 @@ import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 
 const Profile = () => {
-  const [userData, setUserData] = useState({
-    email:'',
-    name: ''
-  });
   const [loading, setLoading] = useState(true);
- 
-  const getUserDetailsById = async (id:any, token:any) => {
-    console.log("id", id)
-    console.log("token", token)
-    try {
-      const res = await axios.get(`http://localhost:3001/api/user/get-details/:${id}`, {
-        headers: {
-          token: `Bearer ${token}`,
-        },
-      }); 
-      console.log("resdata>>>>", res.data)
-      return res.data;
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-      throw error;
-    }
-  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const access_token = localStorage.getItem('access_token');
-      const id = localStorage.getItem('user_id');
-        
-      if (id && access_token) {
-        try {
-          const userDetails = await getUserDetailsById(id, access_token);
-          setUserData(userDetails.data);
-          console.log("userDetails",userDetails.data)
-        } catch (error) {
-          console.error('Error fetching user details:', error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-  
-    fetchData();
-  }, []);
+    getJwtToken()
+  },[])
+
+  const getJwtToken = async () => {
+    const res =  await localStorage.getItem('jwt')
+    console.log(res)
+  }
 
   return (
     <Container className="mt-5">
@@ -65,11 +32,11 @@ const Profile = () => {
             <>
               <div className="mb-3">
                 <label className="form-label font-weight-bold">Email:</label>
-                <span>{userData.email}</span>
+                <span>email</span>
               </div>
               <div className="mb-3">
                 <label className="form-label font-weight-bold">Full Name:</label>
-                <span>{userData.name}</span>
+                <span>Name</span>
               </div>
             </>
           )}

@@ -1,48 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button, Offcanvas } from 'react-bootstrap';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import Loading from './app.loading';
 import jwt_decode from "jwt-decode"; 
-import { login } from '@/Service/userService';
-
+import * as userService from '../service/userService'
+import { useMutationHooks } from '@/hooks/userMutationHook'; 
+import * as toast from './app.toast'
+import {useDispatch} from 'react-redux'
+import { updateUser } from '@/redux/slides/userSilde';
 interface FormLoginProps {
   show: boolean;
   handleCloseForm: () => void;
-  toggleForm: () => void;  
+  toggleForm: () => void;
 }
 
-interface DecodedToken {
-  id: string;
-  isAdmin: boolean;
+type iDecode = {
+  id : string,
+  isAdmin ?: boolean
 }
 
-const FormLogin = ({ show, handleCloseForm, toggleForm}: FormLoginProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+const FormLogin = ({ show, handleCloseForm, toggleForm }: FormLoginProps) => {
+  const [showPassword, setShowPassword] = useState(false); 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
 
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsLoading(true)
-    e.preventDefault();
-
-    const result = await login(email, password);
-
-    if (result.success) {
-      toast.success('Đăng nhập thành công');
-      setEmail('');
-      setPassword('');
-      handleCloseForm();
-    } else {
-      toast.error(result.error);
-    } 
-    setIsLoading(false);
-  };
+  const mutation = useMutationHooks(
+     data => userService.loginUser(data)
+  )
   
+  const {data , isLoading, reset }= mutation
+
+  useEffect(() => {
+    if (data?.newReponse?.status === 'OK') {
+      toast.success();
+      reset();   
+      handleCloseForm();   
+      localStorage.setItem('access_token', data?.newReponse?.access_token)
+      if(data?.newReponse?.access_token){
+        const decode:iDecode = jwt_decode(data?.newReponse?.access_token)
+        console.log("decode", decode)
+        if(decode?.id){
+          handleGetDetailsUser(decode?.id, data?.newReponse?.access_token)
+        }
+      }
+    }
+  }, [data?.newReponse?.status]); 
+
+  const handleGetDetailsUser = async (id: string, token: string) => {
+    // const storage = localStorage.getItem('refresh_token')
+    // const refreshToken = JSON.parse(storage)
+    const res = await userService.getDetailUser(id, token)
+    console.log("res", res)
+    dispatch(updateUser({ ...res?.data, access_token: token }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
+    e.preventDefault();
+    mutation.mutate({
+      email,
+      password
+    })  
+  };
+
 
   return (
     <>
@@ -83,11 +104,11 @@ const FormLogin = ({ show, handleCloseForm, toggleForm}: FormLoginProps) => {
                   </Button>
                 </div>
               </Form.Group>
+              {data?.newReponse?.status === 'ERR' && <span style={{ color: 'red' }}>{data?.newReponse?.message}</span>}
               <Loading isLoading={isLoading}>
                 <Button
                   disabled={!email || !password}
-                  variant="dark" className="w-100 mt-4" type="submit">
-
+                  variant="dark" className="w-100 mt-4" type="submit"> 
                   Đăng nhập
                 </Button>
               </Loading>

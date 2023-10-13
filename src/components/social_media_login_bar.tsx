@@ -7,6 +7,7 @@ import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 const SocialMediaLoginBar = () => {
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false); 
+    
 
     const handleRegisterClick = () => {
         setShowRegister(true);

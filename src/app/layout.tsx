@@ -1,4 +1,4 @@
-'use client'  
+'use client'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,6 +7,10 @@ import AppFooter from '@/components/app.footer';
 import { Container } from 'react-bootstrap';
 import SocialMediaLoginBar from '@/components/social_media_login_bar';
 import { ToastContainer } from 'react-toastify';
+import Providers from '@/redux/provider';
+import { Provider } from 'react-redux';
+import { store } from '@/redux/store';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,29 +27,33 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Provider store={store} > 
+        <Providers>
         <div className='fixed-top'>
-        <SocialMediaLoginBar/>
-        <AppHeader/>
+          <SocialMediaLoginBar />
+          <AppHeader />
         </div>
         <div className="mt-5 pt-5">
-        <Container style={{minHeight:' calc(100vh - 60px)' }}>
-        {children}
-        </Container>
+          <Container style={{ minHeight: ' calc(100vh - 60px)' }}>
+            {children}
+          </Container>
         </div>
         <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
         />
-        <AppFooter/>
-        </body>
+        <AppFooter />
+        </Providers>
+        </Provider>
+      </body>
     </html>
   )
 }

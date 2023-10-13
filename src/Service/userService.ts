@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
@@ -6,48 +7,24 @@ export interface DecodedToken {
   isAdmin: boolean;
 }
 
-export const login = async (email: string, password: string) => {
-  try {
-    const res = await axios.post(`http://localhost:3001/api/user/sign-in`, {
-      email: email,
-      password: password
-    });
+export const loginUser = async (data: any) => {
+  const res = await axios.post(`http://localhost:3001/api/user/sign-in`, data);
+  return res.data
+}
 
-    const token = res.data.newReponse?.access_token;
-    const decoded: DecodedToken = jwt_decode(token);
+export const signUpUser = async (data: any) => {
+  const res = await axios.post(`http://localhost:3001/api/user/sign-up`, data);
+  return res.data
+}
 
-    if (decoded?.id) {
-      const userId = decoded?.id;
-      localStorage.setItem('user_id', userId);
-    }
-
-    localStorage.setItem('access_token', JSON.stringify(token));
-
-    return { success: true };
-  } catch (error) {
-    console.error('Error:', error);
-    return { success: false, error: "Email hoặc mật khẩu sai" };
+export const getDetailUser = async (id: string, access_token: string) => {
+  const res = await axios.get(`http://localhost:3001/api/user/get-details/${id}`, {
+    headers: {
+      token: `Bearer ${access_token}`,
   }
-};
+  });
+  return res.data
+}
 
-
-export const signUp = async (email: string, password: string, confirmPassword: string) => {
-  try {
-    const response = await axios.post(`http://localhost:3001/api/user/sign-up`, {
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword
-    });
-
-    if (response.data.status === 'ERR') {
-      return { success: false, error: 'Email đã tồn tại' };
-    } else if (response.data.status === 'ERR3') {
-      return { success: false, error: 'Xác nhận mật khẩu không chính xác' };
-    } else {
-      return { success: true };
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    return { success: false, error: 'Đã có lỗi xảy ra' };
-  }
-};
+ 
+ 
