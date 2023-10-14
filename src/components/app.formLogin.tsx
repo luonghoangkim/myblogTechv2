@@ -9,15 +9,11 @@ import { useMutationHooks } from '@/hooks/userMutationHook';
 import * as toast from './app.toast'
 import {useDispatch} from 'react-redux'
 import { updateUser } from '@/redux/slides/userSilde';
+import { iDecode } from '@/types/types';
 interface FormLoginProps {
   show: boolean;
   handleCloseForm: () => void;
   toggleForm: () => void;
-}
-
-type iDecode = {
-  id : string,
-  isAdmin ?: boolean
 }
 
 const FormLogin = ({ show, handleCloseForm, toggleForm }: FormLoginProps) => {
@@ -37,10 +33,9 @@ const FormLogin = ({ show, handleCloseForm, toggleForm }: FormLoginProps) => {
       toast.success();
       reset();   
       handleCloseForm();   
-      localStorage.setItem('access_token', data?.newReponse?.access_token)
+      localStorage.setItem('access_token', JSON.stringify(data?.newReponse?.access_token))
       if(data?.newReponse?.access_token){
-        const decode:iDecode = jwt_decode(data?.newReponse?.access_token)
-        console.log("decode", decode)
+        const decode:iDecode = jwt_decode(data?.newReponse?.access_token) 
         if(decode?.id){
           handleGetDetailsUser(decode?.id, data?.newReponse?.access_token)
         }
@@ -51,8 +46,7 @@ const FormLogin = ({ show, handleCloseForm, toggleForm }: FormLoginProps) => {
   const handleGetDetailsUser = async (id: string, token: string) => {
     // const storage = localStorage.getItem('refresh_token')
     // const refreshToken = JSON.parse(storage)
-    const res = await userService.getDetailUser(id, token)
-    console.log("res", res)
+    const res = await userService.getDetailUser(id, token) 
     dispatch(updateUser({ ...res?.data, access_token: token }))
   }
 

@@ -33,10 +33,7 @@ function AppHeader() {
               </NavDropdown.Item>
             </NavDropdown> */}
             <Nav.Link href="/admin">Admin</Nav.Link> 
-          </Nav>
-          <Nav className="ms-auto">
-            <Nav.Link href="/profile">Profile</Nav.Link>
-          </Nav>
+          </Nav> 
         </Navbar.Collapse> 
       </Container>
     </Navbar>
