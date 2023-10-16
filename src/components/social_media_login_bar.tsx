@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+"use client"
+import React, { useState } from 'react';
 import Link from 'next/link';
 import FormRegister from './app.formRegister';
 import FormLogin from './app.formLogin';
 import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import {useDispatch, useSelector } from 'react-redux';
-import jwt_decode from "jwt-decode";
-import { isJsonString } from '@/app/untils';
-import { logOut, updateUser } from '@/redux/slides/userSilde';
-import { iDecode } from '@/types/types';
-import * as userService from '../service/userService'
+import { logOut } from '@/redux/slides/userSilde';
 import useUserDetails from '@/hooks/useUserDetail';
 
 
@@ -23,7 +20,7 @@ const SocialMediaLoginBar = () => {
     useUserDetails();
 
     const handleLogOutClick = () => {
-        dispatch(logOut()); // Dispatch action đăng xuất
+        dispatch(logOut());  
         localStorage.removeItem('access_token');
       };
       

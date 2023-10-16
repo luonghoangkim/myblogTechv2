@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import { isJsonString } from '@/app/untils';
 import { updateUser } from '@/redux/slides/userSilde';
 import * as userService from '../service/userService';
-import { iDecode } from '@/types/types';
+import { iDecode } from '@/types/types'; 
 
 const useUserDetails = () => {
     const dispatch = useDispatch();
